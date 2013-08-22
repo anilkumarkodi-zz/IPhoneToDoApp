@@ -24,6 +24,9 @@
 		F771210017C615B500573C16 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F77120FE17C615B500573C16 /* InfoPlist.strings */; };
 		F771210317C615B500573C16 /* ToDoAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F771210217C615B500573C16 /* ToDoAppTests.m */; };
 		F771210F17C61E4500573C16 /* sign.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F771210E17C61E4500573C16 /* sign.jpg */; };
+		F771211217C629D700573C16 /* TaskData.m in Sources */ = {isa = PBXBuildFile; fileRef = F771211117C629D700573C16 /* TaskData.m */; };
+		F771211617C6768800573C16 /* NavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F771211417C6768800573C16 /* NavViewController.m */; };
+		F771211717C6768800573C16 /* NavViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F771211517C6768800573C16 /* NavViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +63,11 @@
 		F771210117C615B500573C16 /* ToDoAppTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToDoAppTests.h; sourceTree = "<group>"; };
 		F771210217C615B500573C16 /* ToDoAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ToDoAppTests.m; sourceTree = "<group>"; };
 		F771210E17C61E4500573C16 /* sign.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sign.jpg; sourceTree = "<group>"; };
+		F771211017C629D700573C16 /* TaskData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskData.h; sourceTree = "<group>"; };
+		F771211117C629D700573C16 /* TaskData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskData.m; sourceTree = "<group>"; };
+		F771211317C6768800573C16 /* NavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavViewController.h; sourceTree = "<group>"; };
+		F771211417C6768800573C16 /* NavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavViewController.m; sourceTree = "<group>"; };
+		F771211517C6768800573C16 /* NavViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NavViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,11 +127,16 @@
 		F77120D717C615B500573C16 /* ToDoApp */ = {
 			isa = PBXGroup;
 			children = (
+				F771211017C629D700573C16 /* TaskData.h */,
+				F771211117C629D700573C16 /* TaskData.m */,
 				F771210E17C61E4500573C16 /* sign.jpg */,
 				F77120E017C615B500573C16 /* AppDelegate.h */,
 				F77120E117C615B500573C16 /* AppDelegate.m */,
 				F77120E917C615B500573C16 /* ViewController.h */,
 				F77120EA17C615B500573C16 /* ViewController.m */,
+				F771211317C6768800573C16 /* NavViewController.h */,
+				F771211417C6768800573C16 /* NavViewController.m */,
+				F771211517C6768800573C16 /* NavViewController.xib */,
 				F77120EC17C615B500573C16 /* ViewController.xib */,
 				F77120D817C615B500573C16 /* Supporting Files */,
 			);
@@ -240,6 +253,7 @@
 				F77120E817C615B500573C16 /* Default-568h@2x.png in Resources */,
 				F77120EE17C615B500573C16 /* ViewController.xib in Resources */,
 				F771210F17C61E4500573C16 /* sign.jpg in Resources */,
+				F771211717C6768800573C16 /* NavViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,6 +291,8 @@
 				F77120DE17C615B500573C16 /* main.m in Sources */,
 				F77120E217C615B500573C16 /* AppDelegate.m in Sources */,
 				F77120EB17C615B500573C16 /* ViewController.m in Sources */,
+				F771211217C629D700573C16 /* TaskData.m in Sources */,
+				F771211617C6768800573C16 /* NavViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
