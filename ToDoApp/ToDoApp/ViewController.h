@@ -1,13 +1,13 @@
 //
-//  ToDoTests.h
-//  ToDoTests
+//  ViewController.h
+//  ToDoApp
 //
 //  Created by gauravm on 22/08/13.
 //  Copyright (c) 2013 thoughtworks. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <UIKit/UIKit.h>
 
-@interface ToDoTests : SenTestCase
+@interface ViewController : UIViewController
 
 @end

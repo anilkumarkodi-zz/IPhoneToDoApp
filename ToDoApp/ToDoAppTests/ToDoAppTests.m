@@ -1,14 +1,14 @@
 //
-//  ToDoTests.m
-//  ToDoTests
+//  ToDoAppTests.m
+//  ToDoAppTests
 //
 //  Created by gauravm on 22/08/13.
 //  Copyright (c) 2013 thoughtworks. All rights reserved.
 //
 
-#import "ToDoTests.h"
+#import "ToDoAppTests.h"
 
-@implementation ToDoTests
+@implementation ToDoAppTests
 
 - (void)setUp
 {
@@ -26,7 +26,7 @@
 
 - (void)testExample
 {
-    STFail(@"Unit tests are not implemented yet in ToDoTests");
+    STFail(@"Unit tests are not implemented yet in ToDoAppTests");
 }
 
 @end
