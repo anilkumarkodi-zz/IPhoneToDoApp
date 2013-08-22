@@ -23,6 +23,7 @@
 		F77120F817C615B500573C16 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F77120D317C615B500573C16 /* Foundation.framework */; };
 		F771210017C615B500573C16 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F77120FE17C615B500573C16 /* InfoPlist.strings */; };
 		F771210317C615B500573C16 /* ToDoAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F771210217C615B500573C16 /* ToDoAppTests.m */; };
+		F771210F17C61E4500573C16 /* sign.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F771210E17C61E4500573C16 /* sign.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		F77120FF17C615B500573C16 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F771210117C615B500573C16 /* ToDoAppTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToDoAppTests.h; sourceTree = "<group>"; };
 		F771210217C615B500573C16 /* ToDoAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ToDoAppTests.m; sourceTree = "<group>"; };
+		F771210E17C61E4500573C16 /* sign.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sign.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 		F77120D717C615B500573C16 /* ToDoApp */ = {
 			isa = PBXGroup;
 			children = (
+				F771210E17C61E4500573C16 /* sign.jpg */,
 				F77120E017C615B500573C16 /* AppDelegate.h */,
 				F77120E117C615B500573C16 /* AppDelegate.m */,
 				F77120E917C615B500573C16 /* ViewController.h */,
@@ -236,6 +239,7 @@
 				F77120E617C615B500573C16 /* Default@2x.png in Resources */,
 				F77120E817C615B500573C16 /* Default-568h@2x.png in Resources */,
 				F77120EE17C615B500573C16 /* ViewController.xib in Resources */,
+				F771210F17C61E4500573C16 /* sign.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,6 +457,7 @@
 				F771210817C615B500573C16 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F771210917C615B500573C16 /* Build configuration list for PBXNativeTarget "ToDoAppTests" */ = {
 			isa = XCConfigurationList;
@@ -461,6 +466,7 @@
 				F771210B17C615B500573C16 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
