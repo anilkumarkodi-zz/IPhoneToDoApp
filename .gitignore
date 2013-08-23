@@ -1,0 +1,4 @@
+*.xcuserdatad/
+*.xcuserstate
+.DS_store
+ToDoApp.xcodeproj/*
