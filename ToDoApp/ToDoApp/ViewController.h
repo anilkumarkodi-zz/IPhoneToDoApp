@@ -15,7 +15,9 @@
     TaskData *task ;
     UINavigationBar * navBar;
     UIView * contentView;
+    
 }
+
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *completedButton;
@@ -24,4 +26,5 @@
 -(NSString *)get:(int)index;
 - (IBAction)setEditing:(BOOL)editing animated:(BOOL)animate;
 - (IBAction)deleteActionButton:(id)index;
+- (IBAction)loadCalender:(id)sender;
 @end

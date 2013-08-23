@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "TaskData.h"
+#import "CalenderViewController.h"
 
 @interface ViewController ()
 
@@ -67,9 +68,15 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    [tableData insertObject:textField.text atIndex:0];
+     [tableView reloadData];
     [textField resignFirstResponder];
     self.enterTaskTextField.text = nil;
     return YES;
+}
+-(IBAction)loadCalender:(id)sender{
+      CalenderViewController *cvc = [[CalenderViewController alloc] init];
+     [self presentViewController:cvc animated:YES completion:nil];
 }
 
 
@@ -80,5 +87,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 }
 
 - (IBAction)CompletedTask:(id)sender {
+    NSLog(@"value: %@",[sender date]);
 }
 @end
