@@ -10,6 +10,8 @@
 
 @interface CalenderViewController : UIViewController
 - (IBAction)Done:(id)sender;
+@property (nonatomic, retain) NSString *datePicked;
+@property (nonatomic, retain) UIDatePicker *datePicker;
 @property (weak, nonatomic) IBOutlet UILabel *onDateChange;
-
+-(NSString*) getDate;
 @end

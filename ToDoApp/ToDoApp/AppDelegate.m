@@ -11,13 +11,62 @@
 #import "ViewController.h"
 
 @implementation AppDelegate
+@synthesize viewController;
+
+@synthesize window = _window;
+@synthesize navigationController;
+@synthesize dbFilePath;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    self.viewController = [[ViewController alloc] initWithNibName:@"ViewController" bundle:nil];
-    self.window.rootViewController = self.viewController;
+    
+    
+    NSString *DATABASE_FILE_NAME = @"todo.db";
+    NSString * DATABASE_RESOURCE_NAME = @"todo";
+    NSString *DATABASE_RESOURCE_TYPE = @"db";
+    NSArray *searcPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES);
+      NSLog(@"%@",searcPaths);
+    NSString *documentFolderPath = [searcPaths objectAtIndex:0];
+
+    dbFilePath = [documentFolderPath stringByAppendingPathComponent:DATABASE_FILE_NAME];
+
+
+    NSLog(@"%@",documentFolderPath);
+    
+    if(![[NSFileManager defaultManager] fileExistsAtPath:dbFilePath]){
+
+        NSLog(@"didnt find db");
+
+        NSString *backupDbPath = [[NSBundle mainBundle] pathForResource:DATABASE_RESOURCE_NAME ofType:DATABASE_RESOURCE_TYPE];
+
+        NSLog(@"%@========================",backupDbPath);
+        
+        if(backupDbPath == nil){
+
+            NSLog(@"coudnt find db");
+
+        }else{
+
+            BOOL copiedBackupDb = [[NSFileManager defaultManager] copyItemAtPath:backupDbPath toPath:dbFilePath error:nil];
+            
+            if(!copiedBackupDb){
+                
+                NSLog(@"copying failed");
+                
+            }
+            
+        }
+        
+}
+
+    
+    
+    
+    viewController = [[ViewController alloc] init];
+    navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
+    _window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -30,6 +79,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
+
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
