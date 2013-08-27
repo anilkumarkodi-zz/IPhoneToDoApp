@@ -25,12 +25,12 @@
     UIDatePicker *myPicker = [[UIDatePicker alloc] initWithFrame:pickerFrame];
     [myPicker addTarget:self action:@selector(pickerChanged:)forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:myPicker];
+   
     NSDate* eventDate=[NSDate date];
-    
     NSString *date = [NSDateFormatter localizedStringFromDate:eventDate
                                                     dateStyle:NSDateFormatterShortStyle
                                                     timeStyle:NSDateFormatterShortStyle];
-     finalDate = date;
+    finalDate = date;
     dateLabel.text=date;
 }
 

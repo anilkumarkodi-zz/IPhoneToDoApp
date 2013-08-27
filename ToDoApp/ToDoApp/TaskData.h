@@ -19,4 +19,5 @@
 -(void)inserttitle:(NSString*)title anddate:(NSString*)date;
 -(NSMutableArray*)getData:(NSMutableArray*) array;
 -(TaskRow*)getMaxRecord:(TaskRow*) row ;
+-(void) deleteRow:(NSNumber*)todoId;
 @end

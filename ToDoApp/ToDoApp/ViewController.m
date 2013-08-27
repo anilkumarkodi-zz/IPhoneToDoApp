@@ -32,6 +32,9 @@ NSMutableArray *tableData;
     TaskData *taskData = [[TaskData alloc]init];
     tableData = [[NSMutableArray alloc] init];
     tableData = [taskData getData:tableData];
+    actualDate = [NSDateFormatter localizedStringFromDate:[NSDate date]
+                                                dateStyle:NSDateFormatterShortStyle
+                                                timeStyle:NSDateFormatterShortStyle];
 }
 
 
@@ -51,13 +54,16 @@ NSMutableArray *tableData;
 }
 -(void)setDate:(NSNotification*) notification{
      actualDate = [notification object];
-    NSLog(@"%@    ................................",actualDate);
 }
 
 - (void)tableView:(UITableView *)aTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
         if (editingStyle == UITableViewCellEditingStyleDelete){
+            
+            TaskData *task1 = [[TaskData alloc]init];
+            TaskRow *row = [tableData objectAtIndex:indexPath.row];
             [tableData removeObjectAtIndex:indexPath.row];
+            [task1 deleteRow:row.todoId];
             [tableView reloadData];
         }
         else if (editingStyle == UITableViewCellEditingStyleInsert){

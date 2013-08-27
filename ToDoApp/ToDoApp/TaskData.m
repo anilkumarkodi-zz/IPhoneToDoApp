@@ -102,4 +102,29 @@ int i=0;
     sqlite3_close(db);
     return row;
 }
+-(void) deleteRow:(NSNumber*)todoId
+{
+    sqlite3 *db;
+    int dbrc;
+    AppDelegate *appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+    const char* dbFilePathUTF8 = [appDelegate.dbFilePath UTF8String];
+    dbrc = sqlite3_open(dbFilePathUTF8,&db);
+    if(dbrc){
+        NSLog(@"coudnt open");
+    }
+    sqlite3_stmt *dbps;
+    NSString *queryStatementNS = [NSString stringWithFormat:@"delete from task where id=%d",[todoId integerValue]];
+    NSLog(@"statemwnt %@",queryStatementNS);
+    const char* queryStatement = [queryStatementNS UTF8String];
+    
+    dbrc = sqlite3_prepare_v2(db, queryStatement, -1, &dbps, NULL);
+    dbrc = sqlite3_step(dbps);
+        
+    sqlite3_finalize(dbps);
+    sqlite3_close(db);
+
+}
+
+
+
 @end
