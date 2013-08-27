@@ -19,48 +19,26 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
-    
     NSString *DATABASE_FILE_NAME = @"todo.db";
     NSString * DATABASE_RESOURCE_NAME = @"todo";
     NSString *DATABASE_RESOURCE_TYPE = @"db";
     NSArray *searcPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES);
-      NSLog(@"%@",searcPaths);
     NSString *documentFolderPath = [searcPaths objectAtIndex:0];
-
+    
     dbFilePath = [documentFolderPath stringByAppendingPathComponent:DATABASE_FILE_NAME];
-
-
-    NSLog(@"%@",documentFolderPath);
     
     if(![[NSFileManager defaultManager] fileExistsAtPath:dbFilePath]){
-
-        NSLog(@"didnt find db");
-
         NSString *backupDbPath = [[NSBundle mainBundle] pathForResource:DATABASE_RESOURCE_NAME ofType:DATABASE_RESOURCE_TYPE];
-
-        NSLog(@"%@========================",backupDbPath);
-        
         if(backupDbPath == nil){
-
             NSLog(@"coudnt find db");
 
         }else{
-
             BOOL copiedBackupDb = [[NSFileManager defaultManager] copyItemAtPath:backupDbPath toPath:dbFilePath error:nil];
-            
             if(!copiedBackupDb){
-                
                 NSLog(@"copying failed");
-                
             }
-            
         }
-        
-}
-
-    
-    
+    }
     
     viewController = [[ViewController alloc] init];
     navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];

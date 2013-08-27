@@ -11,5 +11,4 @@
 @interface TableCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *titleLabelCell;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabelCell;
-
 @end

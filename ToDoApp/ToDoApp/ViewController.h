@@ -15,16 +15,15 @@
     TaskData *task ;
     UINavigationBar * navBar;
     UIView * contentView;
-    
+    NSString *actualDate;
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editButton;
+@property (nonatomic, retain) IBOutlet  NSString *actualDate;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *completedButton;
-
 @property (weak, nonatomic) IBOutlet UITextField *enterTaskTextField;
-//-(NSString *)get:(int)index;
-//- (IBAction)setEditing:(BOOL)editing animated:(BOOL)animate;
-//- (IBAction)deleteActionButton:(id)index;
+
 - (IBAction)loadCalender:(id)sender;
+- (void) setDate:(NSNotification*) notification;
 @end

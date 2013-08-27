@@ -13,7 +13,7 @@
 @end
 
 @implementation SubTaskController
-@synthesize title;
+@synthesize titleLabel;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -26,7 +26,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    title.numberOfLines = 3;
+    titleLabel.numberOfLines = 3;
     // Do any additional setup after loading the view from its nib.
 }
 

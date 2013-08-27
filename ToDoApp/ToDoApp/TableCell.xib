@@ -127,6 +127,7 @@
 								<reference key="IBUITextColor" ref="522603828"/>
 								<reference key="IBUIHighlightedColor" ref="259750372"/>
 								<int key="IBUIBaselineAdjustment">0</int>
+								<int key="IBUITextAlignment">1</int>
 								<reference key="IBUIFontDescription" ref="129489951"/>
 								<reference key="IBUIFont" ref="469090015"/>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>

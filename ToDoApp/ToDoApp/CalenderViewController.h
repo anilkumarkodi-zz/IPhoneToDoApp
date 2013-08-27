@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CalenderViewController : UIViewController
+@interface CalenderViewController : UIViewController{
+    NSString *finalDate;
+}
+
 - (IBAction)Done:(id)sender;
-@property (nonatomic, retain) NSString *datePicked;
+@property (nonatomic, retain) NSString *finalDate;
 @property (nonatomic, retain) UIDatePicker *datePicker;
-@property (weak, nonatomic) IBOutlet UILabel *onDateChange;
--(NSString*) getDate;
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+
 @end

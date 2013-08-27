@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "TaskData.h"
 #import "TableCell.h"
+#import "TaskRow.h"
 #import "CalenderViewController.h"
 #import "SubTaskController.h"
 @interface ViewController ()
@@ -19,18 +20,20 @@
 NSMutableArray *tableData;
 @synthesize enterTaskTextField;
 @synthesize tableView;
+@synthesize actualDate;
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(setDate:)
+                                                 name:@"selectedDate" object:nil];
 
-    tableData = [NSMutableArray arrayWithObjects:@"Egg Benedict", @"Mushroom Risotto", @"Full Breakfast", @"Hamburger", @"Ham and Egg Sandwich", @"Creme Brelee", @"White Chocolate Donut", @"Starbucks Coffee", @"Vegetable Curry", @"Instant Noodle with Egg", @"Noodle with BBQ Pork", @"Japanese Noodle with Pork", @"Green Tea", @"Thai Shrimp Cake", @"Angry Birds Cake", @"Ham and Cheese Panini", nil];
-    
+    [super viewDidLoad];
+    TaskData *taskData = [[TaskData alloc]init];
+    tableData = [[NSMutableArray alloc] init];
+    tableData = [taskData getData:tableData];
 }
-- (IBAction)setEditing:(BOOL)editing animated:(BOOL)animate {
-//    [super setEditing:editing animated:animate];
-//    [self.tableView setEditing:editing animated:animate];
-}
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -39,13 +42,16 @@ NSMutableArray *tableData;
     if (cell == nil) {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TableCell" owner:self options:nil];
         cell = [nib objectAtIndex:0];
-
         cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-        
     }
-    cell.dateLabelCell.text = @"12-12-2013";
-    cell.titleLabelCell.text = [tableData objectAtIndex:indexPath.row];
+    TaskRow *row = (TaskRow*)[tableData objectAtIndex:indexPath.row];
+    cell.dateLabelCell.text = row.date;
+    cell.titleLabelCell.text = row.todoTitle;
     return cell;
+}
+-(void)setDate:(NSNotification*) notification{
+     actualDate = [notification object];
+    NSLog(@"%@    ................................",actualDate);
 }
 
 - (void)tableView:(UITableView *)aTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -67,7 +73,11 @@ NSMutableArray *tableData;
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [tableData insertObject:textField.text atIndex:0];
+    TaskData *taskData = [[TaskData alloc]init];
+    TaskRow *taskRow=[[TaskRow alloc]init];
+    [taskData inserttitle:textField.text anddate:actualDate];
+    taskRow = [taskData getMaxRecord:taskRow];
+    [tableData insertObject:taskRow atIndex:0];
     [tableView reloadData];
     [textField resignFirstResponder];
     self.enterTaskTextField.text = nil;
@@ -76,22 +86,16 @@ NSMutableArray *tableData;
 
 -(IBAction)loadCalender:(id)sender
 {
-      CalenderViewController *cvc = [[CalenderViewController alloc] init];
-     [self.navigationController pushViewController:cvc animated:YES];
+    CalenderViewController *cvc = [[CalenderViewController alloc] init];
+    [self.navigationController pushViewController:cvc animated:YES];
 }
 
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
     SubTaskController *subTaskController=[[SubTaskController alloc] init];
     [self.navigationController pushViewController:subTaskController animated:YES];
-    subTaskController.title.text = [self.tableView cellForRowAtIndexPath:indexPath].textLabel.text;
-
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    TableCell *t = (TableCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+    subTaskController.titleLabel.text = t.titleLabelCell.text;
 }
 
 @end

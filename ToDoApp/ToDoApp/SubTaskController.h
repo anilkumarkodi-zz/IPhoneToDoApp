@@ -10,7 +10,7 @@
 
 @interface SubTaskController : UIViewController
 - (IBAction)onBack:(id)sender;
-@property (weak, nonatomic) IBOutlet UILabel *title;
+@property (nonatomic, retain) IBOutlet UILabel *titleLabel;
 
 @end
 

@@ -15,69 +15,30 @@
 
 @implementation CalenderViewController
 @synthesize datePicker;
-@synthesize datePicked;
-@synthesize onDateChange;
-
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+@synthesize finalDate;
+@synthesize dateLabel;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    //calender with time
     CGRect pickerFrame = CGRectMake(20,200,50,50);
-
     UIDatePicker *myPicker = [[UIDatePicker alloc] initWithFrame:pickerFrame];
-    
     [myPicker addTarget:self action:@selector(pickerChanged:)forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:myPicker];
+    NSDate* eventDate=[NSDate date];
     
-  //Calender with out time
-     //    UIDatePicker *theDatePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0.0, 200.0, 320.0, 216.0)];
-     //    theDatePicker.datePickerMode = UIDatePickerModeDate;
-     //    self.datePicker = theDatePicker;
-     //    [datePicker addTarget:self action:@selector(dateChanged) forControlEvents:UIControlEventValueChanged];
-     //    [self.view addSubview:datePicker];
-    
-//    
-//    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc]
-//                                     initWithTitle:NSLocalizedString(@"Cancel", @"Cancel - for button to cancel changes")
-//                                     style:UIBarButtonItemStylePlain
-//                                     target:self
-//                                     action:@selector(cancel)];
-//    self.navigationItem.leftBarButtonItem = cancelButton;
-//
-//    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc]
-//                                   initWithTitle:NSLocalizedString(@"Save", @"Save - for button to save changes")
-//                                   style:UIBarButtonItemStylePlain
-//                                   target:self
-//                                   action:@selector(save)];
-//    self.navigationItem.rightBarButtonItem = saveButton;
-//        
-    
-    
-    
-    
- }
--(NSString* )getDate{
-    return datePicked;
-}
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    NSString *date = [NSDateFormatter localizedStringFromDate:eventDate
+                                                    dateStyle:NSDateFormatterShortStyle
+                                                    timeStyle:NSDateFormatterShortStyle];
+     finalDate = date;
+    dateLabel.text=date;
 }
 
-- (IBAction)Done:(id)sender {
+- (IBAction)Done:(id)sender
+{
     [self.navigationController popToRootViewControllerAnimated:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"selectedDate" object:finalDate];
+
 }
 
 - (void)pickerChanged:(id)sender
@@ -85,9 +46,10 @@
     NSString *date = [NSDateFormatter localizedStringFromDate:[sender date]
                                                     dateStyle:NSDateFormatterShortStyle
                                                     timeStyle:NSDateFormatterShortStyle];
-    datePicked = date;
-    onDateChange.text = date;
+    finalDate = date;
+    dateLabel.text = date;
 }
+
 @end
 
 
