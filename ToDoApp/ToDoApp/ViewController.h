@@ -12,7 +12,7 @@
 
 @interface ViewController : UIViewController
 <UITableViewDelegate, UITableViewDataSource,UITextFieldDelegate>{
-    TaskDataModel *task ;
+    TaskDataModel *taskData;
     UINavigationBar * navBar;
     UIView * contentView;
     NSString *actualDate;
@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *completedButton;
 @property (weak, nonatomic) IBOutlet UITextField *enterTaskTextField;
+- (IBAction)onCompleted:(id)sender;
 
 - (IBAction)loadCalender:(id)sender;
 - (void) setDate:(NSNotification*) notification;
