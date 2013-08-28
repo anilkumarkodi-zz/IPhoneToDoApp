@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "TaskData.h"
+#import "TaskDataModel.h"
 #import "TableCell.h"
 #import "TaskRow.h"
 #import "CalenderViewController.h"
@@ -24,20 +24,34 @@ NSMutableArray *tableData;
 
 - (void)viewDidLoad
 {
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(setDate:)
                                                  name:@"selectedDate" object:nil];
 
     [super viewDidLoad];
-    TaskData *taskData = [[TaskData alloc]init];
+    TaskDataModel *taskData = [[TaskDataModel alloc]init];
     tableData = [[NSMutableArray alloc] init];
     tableData = [taskData getData:tableData];
     actualDate = [NSDateFormatter localizedStringFromDate:[NSDate date]
                                                 dateStyle:NSDateFormatterShortStyle
                                                 timeStyle:NSDateFormatterShortStyle];
+
+    UISwipeGestureRecognizer *gesture = [[UISwipeGestureRecognizer alloc]
+                                         initWithTarget:self action:@selector(handleSwipeFrom:)];
+    [gesture setDirection:UISwipeGestureRecognizerDirectionRight];
+    [tableView addGestureRecognizer:gesture];
 }
 
-
+- (void)handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer
+{
+    CGPoint swipeLocation = [recognizer locationInView:self.tableView];
+    NSIndexPath *swipedIndexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
+    NSLog(@"%d",swipedIndexPath.row);
+    TaskRow *row = [tableData objectAtIndex:swipedIndexPath.row];
+    NSLog(@"%@",row.todoTitle);
+}
+    
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *simpleTableIdentifier = @"TableCell";
@@ -60,7 +74,7 @@ NSMutableArray *tableData;
 {
         if (editingStyle == UITableViewCellEditingStyleDelete){
             
-            TaskData *task1 = [[TaskData alloc]init];
+            TaskDataModel *task1 = [[TaskDataModel alloc]init];
             TaskRow *row = [tableData objectAtIndex:indexPath.row];
             [tableData removeObjectAtIndex:indexPath.row];
             [task1 deleteRow:row.todoId];
@@ -79,7 +93,7 @@ NSMutableArray *tableData;
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    TaskData *taskData = [[TaskData alloc]init];
+    TaskDataModel *taskData = [[TaskDataModel alloc]init];
     TaskRow *taskRow=[[TaskRow alloc]init];
     [taskData inserttitle:textField.text anddate:actualDate];
     taskRow = [taskData getMaxRecord:taskRow];

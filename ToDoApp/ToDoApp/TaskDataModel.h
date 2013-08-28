@@ -8,16 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import "TaskRow.h"
-@interface TaskData : NSObject{
-    struct taskRow{
-        NSInteger id;
-        char* title;
-        char* date;
-    }task1;
-    }
-
+@interface TaskDataModel : NSObject{
+    TaskRow *row;
+    int dbResultCode;
+}
+    
 -(void)inserttitle:(NSString*)title anddate:(NSString*)date;
 -(NSMutableArray*)getData:(NSMutableArray*) array;
 -(TaskRow*)getMaxRecord:(TaskRow*) row ;
 -(void) deleteRow:(NSNumber*)todoId;
+    
 @end

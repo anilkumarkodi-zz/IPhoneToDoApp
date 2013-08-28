@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TaskData.h"
+#import "TaskDataModel.h"
 
 
 @interface ViewController : UIViewController
 <UITableViewDelegate, UITableViewDataSource,UITextFieldDelegate>{
-    TaskData *task ;
+    TaskDataModel *task ;
     UINavigationBar * navBar;
     UIView * contentView;
     NSString *actualDate;

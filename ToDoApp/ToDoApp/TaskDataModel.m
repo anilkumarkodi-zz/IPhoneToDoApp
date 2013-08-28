@@ -6,22 +6,20 @@
 //  Copyright (c) 2013 thoughtworks. All rights reserved.
 //
 
-#import "TaskData.h"
+#import "TaskDataModel.h"
 #import <sqlite3.h>
 #import "AppDelegate.h"
 #import "TaskRow.h"
-@implementation TaskData
+@implementation TaskDataModel
 int i=0;
 
 -(void)inserttitle:(NSString*)title anddate:(NSString*)date{
     sqlite3 *db;
-
-    int dbrc;
     AppDelegate *appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
     const char* dbFilePathUTF8 = [appDelegate.dbFilePath UTF8String];
     
-    dbrc = sqlite3_open(dbFilePathUTF8,&db);
-    if(dbrc){
+    dbResultCode = sqlite3_open(dbFilePathUTF8,&db);
+    if(dbResultCode){
         NSLog(@"coudnt open");
     }
     
@@ -29,9 +27,9 @@ int i=0;
     NSString *insertStatementNS = [NSString stringWithFormat:@"insert into \"task\"\(title,date) values(\'%@\',\'%@\')",title,date ];
 
     const char* insertStatement = [insertStatementNS UTF8String];    
-    dbrc = sqlite3_prepare_v2(db, insertStatement, -1, &dbps, NULL);
+    dbResultCode = sqlite3_prepare_v2(db, insertStatement, -1, &dbps, NULL);
     
-    dbrc = sqlite3_step(dbps);
+    dbResultCode = sqlite3_step(dbps);
     sqlite3_finalize(dbps);
     sqlite3_close(db);
     }
@@ -41,29 +39,28 @@ int i=0;
 
 - (NSMutableArray*)getData:(NSMutableArray*) array {
     sqlite3 *db;
-    int dbrc;
     AppDelegate *appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
     const char* dbFilePathUTF8 = [appDelegate.dbFilePath UTF8String];
-    dbrc = sqlite3_open(dbFilePathUTF8,&db);
-    if(dbrc){
+    dbResultCode = sqlite3_open(dbFilePathUTF8,&db);
+    if(dbResultCode){
         NSLog(@"coudnt open");
     }
     sqlite3_stmt *dbps;
     NSString *queryStatementNS = [NSString stringWithFormat:@"select * from task"];
     const char* queryStatement = [queryStatementNS UTF8String];
     
-    dbrc = sqlite3_prepare_v2(db, queryStatement, -1, &dbps, NULL);
-    while((dbrc = sqlite3_step(dbps)) == SQLITE_ROW){
+    dbResultCode = sqlite3_prepare_v2(db, queryStatement, -1, &dbps, NULL);
+    while((dbResultCode = sqlite3_step(dbps)) == SQLITE_ROW){
         int firstColumn = sqlite3_column_int(dbps, 0);
         NSNumber *id = [[NSNumber alloc]initWithInt:firstColumn];
         NSString *title = [ [NSString alloc] initWithUTF8String:(char*) sqlite3_column_text(dbps, 1)];
         NSString *date = [[NSString alloc] initWithUTF8String:(char*) sqlite3_column_text(dbps, 2)];
-        TaskRow *t = [[TaskRow alloc]init];
-        t.todoId = id;
-        t.todoTitle = title;
-        t.date = date;
+        row = [[TaskRow alloc]init];
+        row.todoId = id;
+        row.todoTitle = title;
+        row.date = date;
 
-        [array insertObject:t atIndex:i];
+        [array insertObject:row atIndex:i];
         i++;
      }
     sqlite3_finalize(dbps);
@@ -71,45 +68,43 @@ int i=0;
     return array;
 }
 
-- (TaskRow*)getMaxRecord:(TaskRow*) row {
+- (TaskRow*)getMaxRecord:(TaskRow*) NewTaskRow {
     sqlite3 *db;
-    int dbrc;
     AppDelegate *appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
     const char* dbFilePathUTF8 = [appDelegate.dbFilePath UTF8String];
-    dbrc = sqlite3_open(dbFilePathUTF8,&db);
-    if(dbrc){
+    dbResultCode = sqlite3_open(dbFilePathUTF8,&db);
+    if(dbResultCode){
         NSLog(@"coudnt open");
     }
     sqlite3_stmt *dbps;
     NSString *queryStatementNS = [NSString stringWithFormat:@"select max(id),title,date from task"];
     const char* queryStatement = [queryStatementNS UTF8String];
     
-    dbrc = sqlite3_prepare_v2(db, queryStatement, -1, &dbps, NULL);
+    dbResultCode = sqlite3_prepare_v2(db, queryStatement, -1, &dbps, NULL);
     
-    while((dbrc = sqlite3_step(dbps)) == SQLITE_ROW){
+    while((dbResultCode = sqlite3_step(dbps)) == SQLITE_ROW){
         
         int firstColumn = sqlite3_column_int(dbps, 0);
         NSNumber *id = [[NSNumber alloc]initWithInt:firstColumn];
         NSString *title = [ [NSString alloc] initWithUTF8String:(char*) sqlite3_column_text(dbps, 1)];
         NSString *date = [[NSString alloc] initWithUTF8String:(char*) sqlite3_column_text(dbps, 2)];
        
-        row.todoId = id;
-        row.todoTitle = title;
-        row.date = date;
+        NewTaskRow.todoId = id;
+        NewTaskRow.todoTitle = title;
+        NewTaskRow.date = date;
     }
     
     sqlite3_finalize(dbps);
     sqlite3_close(db);
-    return row;
+    return NewTaskRow;
 }
 -(void) deleteRow:(NSNumber*)todoId
 {
     sqlite3 *db;
-    int dbrc;
     AppDelegate *appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
     const char* dbFilePathUTF8 = [appDelegate.dbFilePath UTF8String];
-    dbrc = sqlite3_open(dbFilePathUTF8,&db);
-    if(dbrc){
+    dbResultCode = sqlite3_open(dbFilePathUTF8,&db);
+    if(dbResultCode){
         NSLog(@"coudnt open");
     }
     sqlite3_stmt *dbps;
@@ -117,8 +112,8 @@ int i=0;
     NSLog(@"statemwnt %@",queryStatementNS);
     const char* queryStatement = [queryStatementNS UTF8String];
     
-    dbrc = sqlite3_prepare_v2(db, queryStatement, -1, &dbps, NULL);
-    dbrc = sqlite3_step(dbps);
+    dbResultCode = sqlite3_prepare_v2(db, queryStatement, -1, &dbps, NULL);
+    dbResultCode = sqlite3_step(dbps);
         
     sqlite3_finalize(dbps);
     sqlite3_close(db);
