@@ -58,6 +58,7 @@
 
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"werwerw");
     SubTaskController *subTaskController=[[SubTaskController alloc] init];
     [self.navigationController pushViewController:subTaskController animated:YES];
     TableCell *t = (TableCell*)[self.tableView cellForRowAtIndexPath:indexPath];

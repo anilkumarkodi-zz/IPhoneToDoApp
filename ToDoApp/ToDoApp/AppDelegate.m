@@ -9,13 +9,14 @@
 #import "AppDelegate.h"
 
 #import "ViewController.h"
-
+#import "CompletedViewController.h"
 @implementation AppDelegate
 @synthesize viewController;
 
 @synthesize window = _window;
 @synthesize navigationController;
 @synthesize dbFilePath;
+@synthesize completedViewController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

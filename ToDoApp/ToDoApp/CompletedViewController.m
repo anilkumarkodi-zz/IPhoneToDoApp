@@ -31,7 +31,7 @@
     dataModel= [TaskDataModel alloc];
     dataModel = [dataModel initWithDbProperties];
     tableData = [[NSMutableArray alloc] init];
-    tableData = [dataModel getCompletedTask:tableData];
+    tableData = [dataModel getData:tableData forStatus:@"COMPLETED"];
     [tableView reloadData];
 }
 
@@ -42,27 +42,35 @@
     if (cell == nil) {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TableCell" owner:self options:nil];
         cell = [nib objectAtIndex:0];
-        cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     }
     cell.textLabel.backgroundColor = [UIColor clearColor];
     cell.backgroundColor = [UIColor colorWithRed:.1 green:.1 blue:.1 alpha:.4];
     TaskRow *row = (TaskRow*)[tableData objectAtIndex:indexPath.row];
+    [cell.dateLabelCell setTextColor:[UIColor grayColor]];
+    [cell.titleLabelCell setTextColor:[UIColor grayColor]];
     cell.dateLabelCell.text = row.date;
     cell.titleLabelCell.text = row.todoTitle;
     return cell;
+}
+- (void)tableView:(UITableView *)aTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete){
+        TaskDataModel *taskData = [[TaskDataModel alloc] initWithDbProperties];
+        TaskRow *row = [tableData objectAtIndex:indexPath.row];
+        [tableData removeObjectAtIndex:indexPath.row];
+        [taskData deleteRow:row.todoId];
+        [tableView reloadData];
+    }
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [tableData count];
 }
 
--(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-    SubTaskController *subTaskController=[[SubTaskController alloc] init];
-    [self.navigationController pushViewController:subTaskController animated:YES];
-    TableCell *t = (TableCell*)[self.tableView cellForRowAtIndexPath:indexPath];
-    subTaskController.titleLabel.text = t.titleLabelCell.text;
-}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

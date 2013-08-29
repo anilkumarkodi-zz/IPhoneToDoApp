@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "CompletedViewController.h"
 @class ViewController;
+
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>{
     UINavigationController *navigationController;
@@ -18,6 +19,8 @@
 @property (nonatomic,retain) NSString *dbFilePath;
 
 @property (strong, nonatomic) ViewController *viewController;
+@property (strong, nonatomic) CompletedViewController *completedViewController;
+
 @property (strong, nonatomic) UINavigationController *navigationController;
 
 @end

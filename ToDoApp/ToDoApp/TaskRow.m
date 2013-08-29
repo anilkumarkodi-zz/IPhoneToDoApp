@@ -9,7 +9,10 @@
 #import "TaskRow.h"
 
 @implementation TaskRow
+
+@synthesize status;
 @synthesize todoId;
 @synthesize todoTitle;
 @synthesize date;
+
 @end

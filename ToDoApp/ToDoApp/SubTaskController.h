@@ -7,10 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TaskRow.h"
+#import "TaskDataModel.h"
 
-@interface SubTaskController : UIViewController
+@interface SubTaskController : UIViewController<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource>{
+    TaskRow *taskrow;
+    TaskDataModel *taskmodel;
+    NSMutableArray *tableData;
+}
 - (IBAction)onBack:(id)sender;
 @property (nonatomic, retain) IBOutlet UILabel *titleLabel;
+- (IBAction)addSubtask:(id)sender;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 

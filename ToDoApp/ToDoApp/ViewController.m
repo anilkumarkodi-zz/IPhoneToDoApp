@@ -10,6 +10,7 @@
 #import "TaskDataModel.h"
 #import "TableCell.h"
 #import "TaskRow.h"
+#import "AppDelegate.h"
 #import "CalenderViewController.h"
 #import "CompletedListViewController.h"
 #import "SubTaskController.h"
@@ -31,10 +32,10 @@ NSMutableArray *tableData;
                                                  name:@"selectedDate" object:nil];
 
     [super viewDidLoad];
-    taskData = [TaskDataModel alloc];
+    taskData = [[TaskDataModel alloc] initWithDbProperties];
     taskData = [taskData initWithDbProperties];
     tableData = [[NSMutableArray alloc] init];
-    tableData = [taskData getData:tableData];
+    tableData = [taskData getData:tableData forStatus:@"PENDING"];
     actualDate = [NSDateFormatter localizedStringFromDate:[NSDate date]
                                                 dateStyle:NSDateFormatterShortStyle
                                                 timeStyle:NSDateFormatterShortStyle];
@@ -42,7 +43,7 @@ NSMutableArray *tableData;
     UISwipeGestureRecognizer *gesture = [[UISwipeGestureRecognizer alloc]
                                          initWithTarget:self action:@selector(handleSwipeFrom:)];
     [gesture setDirection:UISwipeGestureRecognizerDirectionRight];
-    [tableView addGestureRecognizer:gesture];
+    [tableView addGestureRecognizer:gesture]; 
 }
 
 - (void)handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer
@@ -50,21 +51,16 @@ NSMutableArray *tableData;
 
     CGPoint swipeLocation = [recognizer locationInView:self.tableView];
     NSIndexPath *swipedIndexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
-    UITableViewCell *swipedCell = [self.tableView cellForRowAtIndexPath:swipedIndexPath];
 
-    TableCell *swipedCell1 = (TableCell*)swipedCell;
-    [swipedCell1.titleLabelCell setTextColor:[UIColor darkGrayColor]];
     
     TaskRow *row = [tableData objectAtIndex:swipedIndexPath.row];
-    taskData = [TaskDataModel alloc];
-    taskData = [taskData initWithDbProperties];
+    taskData = [[TaskDataModel alloc] initWithDbProperties];
     
     [taskData updateStatus:row.todoId];
     [tableData removeObjectAtIndex:swipedIndexPath.row];
     NSIndexPath *indexPath = [[NSIndexPath alloc]init];
     indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     NSArray *a = [[NSArray alloc]initWithObjects:swipedIndexPath, nil];
-    NSLog(@"here comming %d",swipedIndexPath.row);
 
     [tableView deleteRowsAtIndexPaths:a withRowAnimation:UITableViewRowAnimationBottom];
     
@@ -93,11 +89,12 @@ NSMutableArray *tableData;
 - (void)tableView:(UITableView *)aTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
         if (editingStyle == UITableViewCellEditingStyleDelete){
-            taskData = [TaskDataModel alloc];
-            taskData = [taskData initWithDbProperties];
+            taskData = [[TaskDataModel alloc] initWithDbProperties];
             TaskRow *row = [tableData objectAtIndex:indexPath.row];
             [tableData removeObjectAtIndex:indexPath.row];
             [taskData deleteRow:row.todoId];
+            taskData = [[TaskDataModel alloc] initWithDbProperties];
+            [taskData deleteSubTaskRow:row.todoId];
             [tableView reloadData];
         }
         else if (editingStyle == UITableViewCellEditingStyleInsert){
@@ -117,17 +114,16 @@ NSMutableArray *tableData;
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    taskData = [TaskDataModel alloc];
-    taskData = [taskData initWithDbProperties];
-    TaskRow *taskRow=[[TaskRow alloc]init];
-    [taskData inserttitle:textField.text anddate:actualDate];
-    
-    taskData = [TaskDataModel alloc];
-    taskData = [taskData initWithDbProperties];
-    taskRow = [taskData getMaxRecord:taskRow];
-    
-    [tableData insertObject:taskRow atIndex:0];
-    [tableView reloadData];
+        taskData = [[TaskDataModel alloc] initWithDbProperties];
+        
+        TaskRow *taskRow=[[TaskRow alloc]init];
+        [taskData inserttitle:textField.text anddate:actualDate];
+        
+        taskData = [[TaskDataModel alloc] initWithDbProperties];
+        taskRow = [taskData getMaxRecord:taskRow];
+        
+        [tableData insertObject:taskRow atIndex:0];
+        [tableView reloadData];
     
     [textField resignFirstResponder];
     self.enterTaskTextField.text = nil;
@@ -135,7 +131,7 @@ NSMutableArray *tableData;
 }
 
 - (IBAction)onCompleted:(id)sender {
-    CompletedListViewController *completedViewController = [[CompletedListViewController alloc]init];
+    CompletedViewController *completedViewController = [[CompletedViewController alloc]init];
     [self presentViewController:completedViewController animated:YES completion:nil];
 }
 
@@ -147,10 +143,11 @@ NSMutableArray *tableData;
 
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
+    TaskRow *row = [[TaskRow alloc]init];    
     SubTaskController *subTaskController=[[SubTaskController alloc] init];
     [self.navigationController pushViewController:subTaskController animated:YES];
-    TableCell *t = (TableCell*)[self.tableView cellForRowAtIndexPath:indexPath];
-    subTaskController.titleLabel.text = t.titleLabelCell.text;
+    row = [tableData objectAtIndex:indexPath.row];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"sendTaskObject" object:row];
 }
 
 @end
